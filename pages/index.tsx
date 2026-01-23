@@ -2,17 +2,11 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import matter from "gray-matter";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { ChevronRight } from "heroicons-react";
 
 dayjs.extend(relativeTime);
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -45,25 +39,40 @@ interface BlogStaticProps {
 
 export default function Blog({ posts }: { posts: BlogStaticProps[] }) {
   return (
-    <main className={`${geistMono.variable} ${geistSans.variable} font-[family-name:var(--font-geist-sans)] container m-4 lg:m-12`}>
-      <h1 className="font-black text-4xl border-b-2 border-gray-500 pb-8 mb-4">Welcome to Ajay's Blogs</h1>
-      <ul>
-        {posts.map((post: BlogStaticProps) => (
-          <li key={post.slug} className="border border-gray-500 rounded-md p-4 flex justify-between items-center">
-            <div>
-              <Link href={`/${post.slug}`}>
-                <h2 className="font-bold text-2xl">{post.frontmatter.title}</h2>
-                <p className="text-gray-500" title={dayjs(post.frontmatter.date).format("DD/MM/YYYY")}>{dayjs(post.frontmatter.date).fromNow()}</p>
-                <p className="text-gray-500 text-sm">{post.frontmatter.tags.join(', ')}</p>
-              </Link>
+    <div className="flex justify-center items-center w-screen h-screen bg-background">
+      <main className={`${geistMono.variable} font-mono w-[95vw] h-[95vh]`}>
+        <div className="border-2 border-comment rounded-lg overflow-hidden h-full flex flex-col">
+          <div className="bg-comment p-2 flex items-center">
+            <div className="flex space-x-2">
+              <div className="w-3 h-3 bg-red rounded-full"></div>
+              <div className="w-3 h-3 bg-yellow rounded-full"></div>
+              <div className="w-3 h-3 bg-green rounded-full"></div>
             </div>
-            <div className="text-gray-500">
-              <ChevronRight onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }} size={40}/>
+            <div className="flex-grow text-center text-white">
+              <p>~/blog</p>
             </div>
-          </li>
-        ))}
-      </ul>
-    </main>
+          </div>
+          <div className="p-4 flex-grow overflow-auto">
+            <h1 className="text-2xl mb-4"><span className="text-green">❯</span> ls -la</h1>
+            <ul>
+              {posts.map((post: BlogStaticProps) => (
+                <li key={post.slug} className="mb-2">
+                  <Link href={`/${post.slug}`} className="flex items-center space-x-4">
+                    <span className="text-blue flex-shrink-0">drwxr-xr-x</span>
+                    <span className="text-white text-sm flex-shrink-0">
+                      {post.frontmatter.tags.slice(0, 2).join(', ')}
+                      {post.frontmatter.tags.length > 2 && '...'}
+                    </span>
+                    <span className="text-comment text-sm flex-shrink-0" title={dayjs(post.frontmatter.date).format("DD/MM/YYYY")}>{dayjs(post.frontmatter.date).fromNow()}</span>
+                    <h2 className="text-foreground flex-grow min-w-0 truncate">{post.frontmatter.title}</h2>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 }
 
