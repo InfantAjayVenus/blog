@@ -25,7 +25,7 @@ export type Frontmatter = {
 export class FrontmatterFactory {
   public static createFrontmatterFromValue(title: string, date: Date, tags: string[]): Frontmatter {
     const figletTitle = figlet.textSync(title, {
-      font: 'Standard',
+      font: 'Small',
       horizontalLayout: 'default',
       verticalLayout: 'default',
       width: 80,
@@ -46,6 +46,35 @@ interface BlogStaticProps {
   slug: string;
   frontmatter: Frontmatter;
 };
+
+const RainbowFiglet = ({ text }: { text: string }) => {
+  const rainbowColors = [
+    'text-red',
+    'text-orange',
+    'text-yellow',
+    'text-green',
+    'text-teal',
+    'text-cyan',
+    'text-sky-blue',
+    'text-blue',
+    'text-magenta',
+  ];
+  let colorIndex = 0;
+
+  return (
+    <pre className="text-sm whitespace-pre-wrap">
+      {text.split('').map((char, index) => {
+        if (char === ' ' || char === '\n') {
+          return <span key={index}>{char}</span>;
+        }
+        const color = rainbowColors[colorIndex % rainbowColors.length];
+        colorIndex++;
+        return <span key={index} className={color}>{char}</span>;
+      })}
+    </pre>
+  );
+};
+
 
 export default function Blog({ posts }: { posts: BlogStaticProps[] }) {
   const [selectedPost, setSelectedPost] = useState(posts[0]);
@@ -71,9 +100,7 @@ export default function Blog({ posts }: { posts: BlogStaticProps[] }) {
 
           {/* Main Pane */}
           <div className="w-3/4 p-4 overflow-y-auto">
-            <pre className="text-green text-sm whitespace-pre-wrap">
-              {selectedPost.frontmatter.figletTitle}
-            </pre>
+            <RainbowFiglet text={selectedPost.frontmatter.figletTitle} />
             <div className="mt-4">
               <span className="text-comment" title={dayjs(selectedPost.frontmatter.date).format("DD/MM/YYYY")}>
                 Published {dayjs(selectedPost.frontmatter.date).fromNow()}
