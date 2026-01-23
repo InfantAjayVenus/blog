@@ -10,7 +10,9 @@
     "preview": "next build && serve out"
   },
   "dependencies": {
+    "@types/figlet": "^1.7.0",
     "dayjs": "^1.11.13",
+    "figlet": "^1.9.4",
     "gray-matter": "^4.0.3",
     "heroicons": "^2.2.0",
     "heroicons-react": "^1.4.1",
