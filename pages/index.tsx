@@ -60,7 +60,7 @@ export default function Blog({ posts }: { posts: BlogStaticProps[] }) {
             <ul>
               {posts.map((post) => (
                 <li key={post.slug}
-                  className={`cursor-pointer p-1 rounded ${selectedPost.slug === post.slug ? 'bg-blue text-white' : 'text-foreground'}`}
+                  className={`cursor-pointer p-1 rounded ${selectedPost.slug === post.slug ? 'bg-sky-blue text-background' : 'text-foreground'}`}
                   onClick={() => setSelectedPost(post)}
                 >
                   {post.frontmatter.title}
