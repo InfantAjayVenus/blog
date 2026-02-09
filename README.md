@@ -182,6 +182,11 @@ Modify the `FrontmatterFactory` in `pages/index.tsx` to change ASCII art setting
 - CMD utility to create a new blog post
 - Terminal window like border around the content
 - Different directories for content grouping like `Posts/`, `Notes/`, `Ideas/` etc.,
+- Create a home page with the below content
+    - Kaizen
+    - Current Company Name
+    - Name of Book currently being Read
+    - Search
 
 ## License
 
